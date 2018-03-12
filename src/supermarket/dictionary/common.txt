@@ -1,0 +1,18 @@
+﻿{
+    "en": {
+        "account": "Account",
+        "phone": "Phone",
+        "mail": "E-Mail",
+        "projectname": "Project Name",
+        "title":"Title",
+        "linenum":"Linenum"
+    },
+    "cn": {
+        "account": "账户",
+        "phone": "电话",
+        "mail": "邮箱",
+        "projectname": "项目名称" ,
+        "title":"标题",
+        "linenum":"行号"
+    }
+}

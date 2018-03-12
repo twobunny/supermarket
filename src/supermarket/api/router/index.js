@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bp = require('body-parser');
 const path = require("path");
+const supplier = require("./supplier");
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

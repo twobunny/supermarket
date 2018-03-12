@@ -1,3 +1,3 @@
-.cnav{width:100%;text-align:center;padding-top:20px;}
+.cnav{width:100%;text-align:center;}
 .cnav dt{border:1px solid #999;border-left:none;border-right:none;background: -webkit-linear-gradient(#efefef,white,#efefef);height:40px;line-height:40px;}
 .cnav dd{display: none;}

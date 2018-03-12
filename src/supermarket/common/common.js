@@ -1,5 +1,7 @@
 var state={
-    // lanType:'en'
+    lanType:'en',
+    //  请求的统一api地址
+    baseurl:"https://cnodejs.org/api/v1/topics",   
 }
 var mutations ={}
 
