@@ -9,8 +9,7 @@
                 config:{
                     api:"",
                     params:{page:1,limit:10},
-                    // cols:['supplierid','person','phone','adress']
-                    cols:['title']
+                    cols:['supplierid','person','phone','adress']
                 }
             }
         },
@@ -18,7 +17,7 @@
             datagrid:DatagridComponent
         },
         beforeMount(){
-            this.config.api = this.$store.state.common.baseurl;
+            this.config.api = this.$store.state.common.baseurl+"/getsupplier";
         }
     }
 </script>

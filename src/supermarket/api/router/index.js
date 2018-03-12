@@ -20,7 +20,7 @@ app.use(bp.urlencoded({extended: false}));
 
 module.exports = {
     start(_port){
-
+        supplier.register(app);
         app.listen(_port||8081);
 
     }
