@@ -3,6 +3,8 @@ const app = express();
 const bp = require('body-parser');
 const path = require("path");
 const supplier = require("./supplier");
+const warehouse = require("./warehouse");
+
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -21,6 +23,8 @@ app.use(bp.urlencoded({extended: false}));
 module.exports = {
     start(_port){
 
+
+        warehouse.register(app)
         app.listen(_port||8081);
 
     }

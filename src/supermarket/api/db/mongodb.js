@@ -8,7 +8,7 @@ client.connect('mongodb://127.0.0.1:27017', (_error, _db) => {
         console.error(_error);
         return false;
     }
-    db = _db.db('supermarket');
+    db = _db.db('test1708');
 })
 
 module.exports = {
@@ -36,6 +36,7 @@ module.exports = {
     insert: (_collection, _data) => {
         return new Promise((resolve, reject) => {
             db.collection(_collection).insert(_data).then((result, error) => {
+                console.log('*******',result)
                 resolve(result);
             })
         })
