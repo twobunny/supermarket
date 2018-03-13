@@ -24,6 +24,7 @@
                     <th v-else>序号</th>
                     
                     <th v-for="(val,key) in dataset[2]" v-if="config.cols.indexOf(key)>-1">{{ dictionary[$store.state.common.lanType][key] || key}}</th>
+                    <th v-if="config.cols.indexOf(key)>-1" v-for="(val,key) in dataset[0]" >{{ dictionary[$store.state.common.lanType][key] || key}}</th>
                     <th v-if="$store.state.common.lanType=='en'">Operation</th>
                     <th v-else>操作</th>
                 </tr>
@@ -97,7 +98,8 @@
             http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
             })
-            http.get(this.config.api,{params:this.config.params || {} }).then((res) => {
+            console.log(this.config.api)
+            http.get(this.config.api).then((res) => {
                 this.dataset = res.data.data;
                 this.show=false;
             })

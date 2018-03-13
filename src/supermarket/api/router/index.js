@@ -22,9 +22,8 @@ app.use(bp.urlencoded({extended: false}));
 
 module.exports = {
     start(_port){
-
-
         warehouse.register(app)
+        supplier.register(app);
         app.listen(_port||8081);
 
     }
