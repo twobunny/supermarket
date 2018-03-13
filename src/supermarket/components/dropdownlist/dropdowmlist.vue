@@ -1,6 +1,6 @@
 <template>
-        <select>
-            <option v-for="(obj,idx) in options" value="obj.whid" v-if="current != obj.whid">{{obj.whid}}</option>
+        <select id="drop">
+            <option v-for="(obj,idx) in options" :value="obj.whid" v-if="current != obj.whid">{{obj.whid}}</option>
         </select>
 </template>
 <script type="text/javascript">
