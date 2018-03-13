@@ -3,12 +3,12 @@ const app = express();
 const bp = require('body-parser');
 const path = require("path");
 
-const supplier = require("./supplier");
+const supplier = require("./supplier")
 const itemtrans = require("./trans")
 const invertory = require("./invertory")
-const warehouse = require("./warehouse")
 const transfer = require("./transfer")
 const product = require("./products")
+const warehouse = require("./warehouse")
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -26,6 +26,7 @@ app.use(bp.urlencoded({extended: false}));
 
 module.exports = {
     start(_port){
+        warehouse.register(app)
         supplier.register(app);
         itemtrans.register(app);
         invertory.register(app);

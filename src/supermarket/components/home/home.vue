@@ -11,6 +11,8 @@
                 <router-view></router-view>
             </div>
         </div>
+        <div class = "cover">
+        </div>
     </div>
 </template>
 <script type="text/javascript">

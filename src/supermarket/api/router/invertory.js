@@ -6,7 +6,9 @@ module.exports = {
         app.get("/invertory",(req,res) => {
             let itemid = req.query.itemid;
             let whid = req.query.whid;
-            db.mongodb.select("invertory",{itemid,whid}).then( (result) => {
+            let obj = itemid?{itemid}:{};
+            whid? obj['whid']=whid:obj;
+            db.mongodb.select("invertory",obj).then( (result) => {
                 if(result && result.length>0){
                     res.send(apiResult(true,result));
                 }else{
@@ -16,7 +18,7 @@ module.exports = {
         }),
         app.post("/addinvertory",(req,res) => {
             let params = req.body;
-            console.log(params);
+            console.log(req.body)
         })
     }
 }
