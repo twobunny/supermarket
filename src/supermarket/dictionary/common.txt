@@ -5,14 +5,27 @@
         "mail": "E-Mail",
         "projectname": "Project Name",
         "title":"Title",
-        "linenum":"Linenum"
+        "linenum":"Linenum",
+        "supplierid":"SupplierId",
+        "person":"Person",
+        "adress":"Adress",
+        "outhouse":"Outhose",
+        "inhouse":"Inhouse"
     },
     "cn": {
         "account": "账户",
         "phone": "电话",
         "mail": "邮箱",
-        "projectname": "项目名称" ,
+        "projectname": "项目名称",
         "title":"标题",
-        "linenum":"行号"
+        "linenum":"行号",
+        "supplierid":"供应商编号",
+        "person":"联系人",
+        "adress":"地址",
+        "outhouse":"调出仓库",
+        "inhouse":"调入仓库"
+
+
+
     }
 }

@@ -7,9 +7,10 @@
             <dd><router-link to="11">仓库表</router-link></dd>
             <dd><router-link to="/supplier">供应商</router-link></dd>
         <dt @click="showdd">库存管理</dt>
-            <dd><router-link to="11">调货单</router-link></dd>
+            <dd><router-link to="/invertory">库存表</router-link></dd>
+            <dd><router-link to="/transfer">调货单</router-link></dd>
             <dd><router-link to="11">进货单</router-link></dd>
-            <dd><router-link to="11">待定</router-link></dd>
+            <dd><router-link to="/itemtrans">物料事项</router-link></dd>
         <dt @click="showdd">待定</dt>
             <dd><router-link to="11">4</router-link></dd>
     </dl>

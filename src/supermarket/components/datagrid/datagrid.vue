@@ -7,7 +7,9 @@
                 <tr >
                     <th v-if="$store.state.common.lanType=='en'">Linenum</th>
                     <th v-else>序号</th>
-                    <th v-if="config.cols.indexOf(key)>-1" v-for="(val,key) in dataset[0]" >{{ dictionary[$store.state.common.lanType][key] || key}}</th>
+                    <th v-if="config.cols.indexOf(key)>-1 && dictionary.length>0"  v-for="(val,key) in dataset[0]" >{{ dictionary[$store.state.common.lanType][key] || key}}</th>
+                     <th v-if="config.cols.indexOf(key)>-1 &&  !dictionary.length>0"  v-for="(val,key) in dataset[0]" >{{key}}</th>
+
                     <th v-if="$store.state.common.lanType=='en'">Operation</th>
                     <th v-else>操作</th>
                 </tr>
@@ -46,7 +48,7 @@
         },
         mounted(){
             this.show=true;
-            http.get("http://localhost:8080/src/project/dictionary/common.txt").then( (res) => {
+            http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
             })
             console.log(this.config.api)
