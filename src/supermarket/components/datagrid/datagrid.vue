@@ -9,7 +9,7 @@
                     <h1></h1>
                     <div v-for="(val,idx) in this.config.cols">
                         <label class="lab">
-                            {{dictionary[$store.state.common.lanType][val] || val}}:
+                            {{val}}:
                         </label>
                         <input type="text" class="txt" v-model="txt[val]" v-if="idx == 0 " autofocus/>
                         <input type="text" class="txt" v-model="txt[val]" v-else/>
@@ -28,7 +28,7 @@
                 <tr>
                     <th v-if="$store.state.common.lanType=='en'">Linenum</th>
                     <th v-else>序号</th>
-                    <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1">{{ dictionary[$store.state.common.lanType][key] || key}}</th>
+                    <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1">{{key}}</th>
                     <th v-if="$store.state.common.lanType=='en'">Operation</th>
                     <th v-else>操作</th>
                 </tr>
@@ -91,12 +91,23 @@
         methods:{
             addshow(){
                 this.showcover = true;
-            },
+            },                                                              
             createData(){
                 let pro = this.txt;
                 console.log(pro)
                 console.log($('input[ZZeAtype=text]'))
 
+                 httpclient.post(this.config.api,pro).then((res)=>{
+                    if(res.data.status){
+                        this.showcover = false;
+                        http.get(this.config.api,{params:this.config.params || {} }).then((res) => {
+                            this.dataset = res.data.data;
+                        })
+                        this.txt={}
+                    }else{
+                        alert('error')
+                    }
+                })
 
             },
             cancel(){
