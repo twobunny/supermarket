@@ -11,7 +11,7 @@
                     api:"",
                     params:{},
                     // cols:['supplierid','person','phone','adress']
-                    cols:['id','name','phone','contacts','address']
+                    cols:['whid','whname','address']
                 }
             }
         },
