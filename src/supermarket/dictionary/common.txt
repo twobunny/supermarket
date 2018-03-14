@@ -5,7 +5,11 @@
         "mail": "E-Mail",
         "projectname": "Project Name",
         "title":"Title",
-        "linenum":"Linenum"
+        "linenum":"Linenum",
+        "id":"ID",
+        "name":"Name",
+        "contacts":"Contacts",
+        "address":"Address"
     },
     "cn": {
         "account": "账户",
@@ -13,6 +17,10 @@
         "mail": "邮箱",
         "projectname": "项目名称" ,
         "title":"标题",
-        "linenum":"行号"
+        "linenum":"行号",
+        "id":"编号",
+        "name":"名称",
+        "contacts":"负责人",
+        "address":"地址"
     }
 }

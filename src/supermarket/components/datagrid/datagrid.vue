@@ -1,30 +1,34 @@
 <template>
     <div>
-        <div class="add" @click.stop= "addshow"> 
-            <input type ="button" value="添加" class="btn" />
+        <div class="add" > 
+            <input type ="button" value="添加" class="btn" @click.stop= "addshow"/>
             <div v-show="showcover">
                 <div class = "cover">
                 </div>
                 <form class="adddata">
                     <h1></h1>
-                    <div v-for="(val) in this.config.cols">
-                        <label class="lab">{{val}}</label>
-                        <input type="text" class="txt" v-model="txt[val]"/>
+                    <div v-for="(val,idx) in this.config.cols">
+                        <label class="lab">
+                            {{dictionary[$store.state.common.lanType][val] || val}}:
+                        </label>
+                        <input type="text" class="txt" v-model="txt[val]" v-if="idx == 0 " autofocus/>
+                        <input type="text" class="txt" v-model="txt[val]" v-else/>
+                    </div> 
+                    <div class="btn">
+                    <button class="btn_create" @click.stop= "createData" v-if="$store.state.common.lanType=='en'">Submit</button>
+                    <button class="btn_create" @click.stop= "createData" v-else>提交</button>
+                    <button class="btn_cancel" @click.stop="cancel" v-if="$store.state.common.lanType=='en'">Cancel</button>
+                    <button class="btn_cancel" @click.stop="cancel" v-else>取消</button>
                     </div>
-                    <button class="btn_create" @click.stop= "createData">提交</button>
-                    <button class="btn_cancel" @click.stop="cancel">取消</button>
                 </form>
             </div>
         </div>
-       
         <table class="table  table-hover">
             <thead>
-                <tr >
+                <tr>
                     <th v-if="$store.state.common.lanType=='en'">Linenum</th>
                     <th v-else>序号</th>
-                    
-                    <th v-for="(val,key) in dataset[2]" v-if="config.cols.indexOf(key)>-1">{{ dictionary[$store.state.common.lanType][key] || key}}</th>
-                    <th v-if="config.cols.indexOf(key)>-1" v-for="(val,key) in dataset[0]" >{{ dictionary[$store.state.common.lanType][key] || key}}</th>
+                    <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1">{{ dictionary[$store.state.common.lanType][key] || key}}</th>
                     <th v-if="$store.state.common.lanType=='en'">Operation</th>
                     <th v-else>操作</th>
                 </tr>
@@ -42,6 +46,19 @@
                 </tr>
             </tbody>
         </table>
+        <div class = "page">
+        <ul>
+            <li>
+                <button @click = "pre" v-model = "pageindex">上一页</button>
+            </li>
+            <li v-for="page in this.pages">
+                <input type="button"  :value="page" @click="goto(page)"/>
+            </li>
+            <li>
+                <button @click = "next" v-model = "pageindex">下一页</button>
+            </li>
+        </ul>
+        </div>
         <spinner v-show="show"></spinner> 
     </div>
     
@@ -52,6 +69,7 @@
     import httpclient from '../../httpclient/httpclient.js'
     import "./datagrid.css"
     import '../../../../node_modules/jquery/src/jquery.js'
+
     
     export default {
         props:["config"],
@@ -62,8 +80,9 @@
                 txt:{},
                 show:false,
                 showcover:false,
-                createdata:[],
-                pushdata:{}
+                qty:'',
+                pages:'',
+                pageindex:1
             }
         },
         components:{
@@ -72,37 +91,70 @@
         methods:{
             addshow(){
                 this.showcover = true;
-
             },
             createData(){
                 let pro = this.txt;
-                httpclient.post(this.config.api,pro).then((res)=>{
-                    if(res.data.status){
-                        this.showcover = false;
-                        http.get(this.config.api,{params:this.config.params || {} }).then((res) => {
-                            this.dataset = res.data.data;
-                        })
-                        this.txt={}
-                    }else{
-                        alert('error')
-                    }
-                })
+                console.log(pro)
+                console.log($('input[ZZeAtype=text]'))
+
+
             },
             cancel(){
                 this.showcover = false;
-       
             },
+            goto:function(_page){
+                this.pageindex = _page;
+                http.get(this.config.api,{params:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
+                    this.dataset = res.data.data;
+                })
+                return this.pageindex;
+            },
+            pre(){
+                this.pageindex --;
+                if(this.pageindex <= 0 ){
+                    this.pageindex = 1
+                }
+                http.get(this.config.api,{params:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
+                    this.dataset = res.data.data;
+                })
+                return this.pageindex;
+
+            },
+            next(){
+
+                this.pageindex ++;
+                if(this.pageindex >= this.pages ){
+                    this.pageindex = this.pages
+                }
+                http.get(this.config.api,{params:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
+                    this.dataset = res.data.data;
+                })
+                return this.pageindex;
+
+            }
         },
+       
         mounted(){
             this.show=true;
             http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
             })
             console.log(this.config.api)
-            http.get(this.config.api).then((res) => {
+            http.get(this.config.api,{params: this.config.params || {}}).then((res) => {
                 this.dataset = res.data.data;
+                this.qty = res.data.mes;
+
+                console.log(this.config.params.limit,this.qty)
+
+                this.pages = Math.ceil((this.qty*1) / (this.config.params.limit*1));
+                console.log(this.pages)
+
                 this.show=false;
             })
+
+            
+        
+
         }
     }
 </script>

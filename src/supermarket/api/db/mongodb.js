@@ -36,7 +36,6 @@ module.exports = {
     insert: (_collection, _data) => {
         return new Promise((resolve, reject) => {
             db.collection(_collection).insert(_data).then((result, error) => {
-                console.log('*******',result)
                 resolve(result);
             })
         })
