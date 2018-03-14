@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="add" > 
-            <input type ="button" value="添加" class="btn" @click.stop= "addshow"/>
+            <input type ="button" value="添加" class="btn" @click.stop= "addshow" v-show="showos"/>
             <div v-show="showcover">
                 <div class = "cover">
                 </div>
@@ -9,7 +9,7 @@
                     <h1></h1>
                     <div v-for="(val,idx) in this.config.cols">
                         <label class="lab">
-                            {{val}}:
+                            *{{val}}:
                         </label>
                         <input type="text" class="txt" v-model="txt[val]" v-if="idx == 0 " autofocus/>
                         <input type="text" class="txt" v-model="txt[val]" v-else/>
@@ -29,8 +29,8 @@
                     <th v-if="$store.state.common.lanType=='en'">Linenum</th>
                     <th v-else>序号</th>
                     <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1">{{key}}</th>
-                    <th v-if="$store.state.common.lanType=='en'">Operation</th>
-                    <th v-else>操作</th>
+                    <th v-if="$store.state.common.lanType=='en'" v-show="showos">Operation</th>
+                    <th v-else v-show="showos">操作</th>
                 </tr>
             </thead> 
             <tbody>
@@ -38,10 +38,10 @@
                     <td>{{idx+1}}</td>
                     <td v-for="(val,key) in obj" v-if="config.cols.indexOf(key)>-1">{{val}}</td>
                     <td>
-                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-default">update</button>
-                        <button v-else class="btn btn-default">编辑</button>
-                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-danger">del</button>
-                        <button v-else class="btn btn-danger">删除</button>
+                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-default" v-show="showos">update</button>
+                        <button v-else class="btn btn-default" v-show="showos">编辑</button>
+                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-danger" v-show="showos">del</button>
+                        <button v-else class="btn btn-danger" v-show="showos">删除</button>
                     </td>
                 </tr>
             </tbody>
@@ -72,7 +72,7 @@
     import $ from "jquery"
     
     export default {
-        props:["config"],
+        props:["config",'showo'],
         data:function(){
             return{
                 dataset:[],
@@ -82,6 +82,7 @@
                 showcover:false,
                 qty:'',
                 pages:'',
+                showos:true,
                 pageindex:1
             }
         },
@@ -94,7 +95,13 @@
             },                                                              
             createData(){
                 let pro = this.txt;
-                console.log(pro)
+                let prolength = Object.keys(pro).length;
+                let datalength = Object.keys(this.dataset).length;
+                console.log(prolength,datalength)
+                if(prolength!= datalength){
+                    alert("输入框不能为空");
+                    return 
+                }
 
                  httpclient.post(this.config.api,pro).then((res)=>{
                     if(res.data.status){
@@ -144,18 +151,17 @@
         },
        
         mounted(){
+            if(this.showo === false){
+                this.showos = this.showo;
+            }
             this.show=true;
             http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
             })
-            console.log(this.config.api)
             http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
                 this.dataset = res.data.data;
                 this.qty = res.data.mes;
-                console.log(this.dataset)
                 this.pages = Math.ceil((this.qty*1) / (this.config.params.limit*1));
-                console.log(this.pages)
-
                 this.show=false;
             })
 

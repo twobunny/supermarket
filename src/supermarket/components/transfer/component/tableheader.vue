@@ -41,7 +41,7 @@
                 api:"",
                 dataset:[],
                 show:false,
-                cols:["itemid","itemname",'outqty','price']
+                cols:["itemid","itemname",'outqty','price'],
             }
         },
         components:{
@@ -51,7 +51,7 @@
         },
         beforeMount:function(){
             this.params = this.$store.state.common.whid;
-            this.api = this.$store.state.common.baseurl+"/warehouse";
+            this.api = this.$store.state.common.baseurl+"/getwarehouse";
         },
         methods:{
             tableadd:function(mes){
@@ -90,7 +90,6 @@
                             alert("调出成功");
                         }
                         this.show = false;
-
                     }) 
             }
         }

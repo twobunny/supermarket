@@ -1,7 +1,7 @@
 <template>
     <div>
         <tableheader></tableheader> 
-        <datagrid :config="config"></datagrid>    
+        <datagrid :config="config" :showo="false"></datagrid>    
     </div>
 </template>
 <script type="text/javascript">

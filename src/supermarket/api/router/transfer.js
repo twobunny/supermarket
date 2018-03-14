@@ -4,9 +4,7 @@ const apiResult = require("../utils/apiResult");
 module.exports = {
     register(app){
         app.get("/gettransfer",(req,res) => {
-          
             let params = JSON.parse(req.query.pg);
-
             db.mongodb.select("transfer").then((result) => {
                 let datacounts  = result.length;
                 let page = params.page*1;

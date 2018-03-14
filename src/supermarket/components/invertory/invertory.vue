@@ -1,5 +1,5 @@
 <template>
-    <datagrid :config="config"></datagrid>    
+    <datagrid :config="config" :showo="false"></datagrid>    
 </template>
 <script type="text/javascript">
     import datagrid from "../datagrid/datagrid.vue"
