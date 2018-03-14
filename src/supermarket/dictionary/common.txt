@@ -9,18 +9,29 @@
         "itemId": "itemId",
         "itemName":"itemName",
         "price":"price",
-        "status":"status"
+        "status":"status",
+        "supplierid":"SupplierId",
+        "person":"Person",
+        "adress":"Adress",
+        "outhouse":"Outhose",
+        "inhouse":"Inhouse"
+
     },
     "cn": {
         "account": "账户",
         "phone": "电话",
         "mail": "邮箱",
-        "projectname": "项目名称" ,
+        "projectname": "项目名称",
         "title":"标题",
         "linenum":"行号",
         "itemId": "产品编号",
         "itemName":"产品名称",
         "price":"价格",
-        "status":"状态"
+        "status":"状态",
+        "supplierid":"供应商编号",
+        "person":"联系人",
+        "adress":"地址",
+        "outhouse":"调出仓库",
+        "inhouse":"调入仓库"
     }
 }

@@ -1,3 +1,4 @@
+
 <template>
     <datagrid :config="config"></datagrid>    
 </template>
@@ -8,8 +9,9 @@
             return{
                 config:{
                     api:"",
-                    params:{page:1,limit:10},
-                    cols:['supplierid','person','phone','adress']
+                    params:{},
+                    // cols:['supplierid','person','phone','adress']
+                    cols:['id','name','phone','contacts','address']
                 }
             }
         },
@@ -17,7 +19,7 @@
             datagrid:DatagridComponent
         },
         beforeMount(){
-            this.config.api = this.$store.state.common.baseurl+"/getsupplier";
+            this.config.api = this.$store.state.common.baseurl+'/warehouse';
         }
     }
 </script>

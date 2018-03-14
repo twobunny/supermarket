@@ -1,22 +1,23 @@
 
-const db = require("../db");
 
-const apiResult = require("../utils/apiResult");
+const db = require('../db')
+const apiResult = require('../utils/apiResult')
+
 module.exports = {
-    register(app){
-        app.get("/getsupplier", (req,res) => {
-            let query = req.query;
-            db.mongodb.select("supplier").then( (result) => {
-                if(result && result.length>0){
+    register:(app)=>{
+        app.get('/warehouse',(req,res)=>{
+            db.mongodb.select('warehouse').then((result)=>{
+
+                if(result && result.length){
                     res.send(apiResult(true,result))
                 }else{
                     res.send(apiResult(false))
                 }
             })
         }),
-        app.post('/getsupplier',(req,res)=>{
+        app.post('/warehouse',(req,res)=>{
            let pros = req.body;
-           db.mongodb.insert('supplier',pros).then((result) => {
+           db.mongodb.insert('warehouse',pros).then((result) => {
                     
                 if(result.ops && result.ops.length){
                     res.send(apiResult(true,result))
