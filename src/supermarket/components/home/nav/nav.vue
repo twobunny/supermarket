@@ -10,8 +10,8 @@
             <dd><router-link to="11">调货单</router-link></dd>
             <dd><router-link to="11">进货单</router-link></dd>
             <dd><router-link to="11">待定</router-link></dd>
-        <dt @click="showdd">待定</dt>
-            <dd><router-link to="11">4</router-link></dd>
+        <dt @click="showdd">产品管理</dt>
+            <dd><router-link to="/product">产品表</router-link></dd>
     </dl>
     
 </template>

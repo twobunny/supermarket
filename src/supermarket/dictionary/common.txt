@@ -5,7 +5,11 @@
         "mail": "E-Mail",
         "projectname": "Project Name",
         "title":"Title",
-        "linenum":"Linenum"
+        "linenum":"Linenum",
+        "itemId": "itemId",
+        "itemName":"itemName",
+        "price":"price",
+        "status":"status"
     },
     "cn": {
         "account": "账户",
@@ -13,6 +17,10 @@
         "mail": "邮箱",
         "projectname": "项目名称" ,
         "title":"标题",
-        "linenum":"行号"
+        "linenum":"行号",
+        "itemId": "产品编号",
+        "itemName":"产品名称",
+        "price":"价格",
+        "status":"状态"
     }
 }
