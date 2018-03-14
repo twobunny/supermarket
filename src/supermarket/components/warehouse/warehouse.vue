@@ -9,7 +9,7 @@
             return{
                 config:{
                     api:"",
-                    params:{},
+                    params:{page:1,limit:8},
                     // cols:['supplierid','person','phone','adress']
                     cols:['whid','whname','address']
                 }

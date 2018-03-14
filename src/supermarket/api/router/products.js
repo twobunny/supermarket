@@ -4,12 +4,19 @@ module.exports = {
     register(app){
         app.get('/products', (req, res) => {
             let itemid = req.query.itemid;
+            let params = JSON.parse(req.query.pg);
+
             console.log(itemid)
             db.mongodb.select('item').then((result) => {
-                if(result && result.length > 0){
-                    res.send(apiResult(true, result))
-                } else {
-                    res.send(apiResult(false));
+                let datacounts  = result.length;
+                let page = params.page*1;
+                let limit = params.limit*1;
+                console.log(page,limit)
+                let realdata = result.slice((page-1)*limit,limit*page);
+                if(result && result.length){
+                    res.send(apiResult(true,realdata,datacounts))
+                }else{
+                    res.send(apiResult(false))
                 }
             })
         })

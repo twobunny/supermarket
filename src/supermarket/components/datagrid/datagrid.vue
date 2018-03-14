@@ -64,12 +64,12 @@
     
 </template>
 <script type="text/javascript">
+    // import httppage from"./datagrid.js"
     import http from "axios"
     import spinner from "../spinner/spinner.vue"
     import httpclient from '../../httpclient/httpclient.js'
     import "./datagrid.css"
-    import '../../../../node_modules/jquery/src/jquery.js'
-
+    import $ from "jquery"
     
     export default {
         props:["config"],
@@ -95,12 +95,11 @@
             createData(){
                 let pro = this.txt;
                 console.log(pro)
-                console.log($('input[ZZeAtype=text]'))
 
                  httpclient.post(this.config.api,pro).then((res)=>{
                     if(res.data.status){
                         this.showcover = false;
-                        http.get(this.config.api,{params:this.config.params || {} }).then((res) => {
+                        http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
                             this.dataset = res.data.data;
                         })
                         this.txt={}
@@ -115,9 +114,10 @@
             },
             goto:function(_page){
                 this.pageindex = _page;
-                http.get(this.config.api,{params:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
+                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
                     this.dataset = res.data.data;
                 })
+
                 return this.pageindex;
             },
             pre(){
@@ -125,43 +125,45 @@
                 if(this.pageindex <= 0 ){
                     this.pageindex = 1
                 }
-                http.get(this.config.api,{params:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
+                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
                     this.dataset = res.data.data;
                 })
                 return this.pageindex;
-
             },
             next(){
-
                 this.pageindex ++;
                 if(this.pageindex >= this.pages ){
                     this.pageindex = this.pages
                 }
-                http.get(this.config.api,{params:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
+                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
                     this.dataset = res.data.data;
                 })
                 return this.pageindex;
 
             }
         },
+       
         mounted(){
             this.show=true;
             http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
             })
             console.log(this.config.api)
-            http.get(this.config.api,{params: this.config.params || {}}).then((res) => {
+            http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
                 this.dataset = res.data.data;
                 this.qty = res.data.mes;
-
-                console.log(this.config.params.limit,this.qty)
-
+                console.log(this.dataset)
                 this.pages = Math.ceil((this.qty*1) / (this.config.params.limit*1));
                 console.log(this.pages)
 
                 this.show=false;
             })
 
+            
+        
+
         }
     }
+
+    
 </script>
