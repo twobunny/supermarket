@@ -24,7 +24,7 @@
                 </tbody>
             </table>  
         </div>
-         
+         <spinner v-show="show"></spinner>
     </div>
 </template>
 <script type="text/javascript">
@@ -33,18 +33,21 @@
     import iteminput from "../../iteminput/iteminput.vue"
     import $ from "jquery"
     import httpclient from "../../../httpclient/httpclient.js"
+    import spinner from "../../spinner/spinner.vue"
     export default {
         data:function(){
             return {
                 params:"",
                 api:"",
                 dataset:[],
+                show:false,
                 cols:["itemid","itemname",'outqty','price']
             }
         },
         components:{
             dropdownlist,
-            iteminput
+            iteminput,
+            spinner
         },
         beforeMount:function(){
             this.params = this.$store.state.common.whid;
@@ -52,6 +55,7 @@
         },
         methods:{
             tableadd:function(mes){
+                this.show = true;
                 var exit=false;
                 this.dataset.forEach( item => {
                     if(item.itemid == mes.itemid){
@@ -67,9 +71,11 @@
                     obj.price = mes.price;
                     this.dataset.push(obj);
                 }
+                this.show = false;
+
             },
             transfer:function(){
-                // this.dataset.forEach(item => {
+                    this.show = true;
                     let params={};
                     params.from = this.$store.state.common.whid;
                     params.to = $("#drop option:selected").val();
@@ -79,9 +85,13 @@
                             if(result.data.mes){
                                 alert(result.data.mes);
                             }
+                        }else{
+                            this.dataset=[];
+                            alert("调出成功");
                         }
+                        this.show = false;
+
                     }) 
-                // })
             }
         }
     }

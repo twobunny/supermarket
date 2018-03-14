@@ -8,6 +8,8 @@ import ItemtransComponent from "../components/itemtrans/itemtrans.vue"
 import InvertoryComponent from "../components/invertory/invertory.vue"
 import TransferComponent from "../components/transfer/transfer.vue"
 import WarehouseComponent from '../components/warehouse/warehouse.vue'
+import PurchaseComponent from "../components/purchase/purchase.vue"
+import CashierComponent from "../components/cashier/cashier.vue"
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -21,6 +23,8 @@ const router = new VueRouter({
         {path:"invertory",name:"invertory",component:InvertoryComponent},
         {path:"transfer",name:"transfer",component:TransferComponent},
         {path:'warehouse',component:WarehouseComponent},
+        {path:"purchase",component:PurchaseComponent},
+        {path:"cashier",component:CashierComponent},
 
         ]}
     ]
