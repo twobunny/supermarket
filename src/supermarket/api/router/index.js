@@ -2,9 +2,15 @@ const express = require('express');
 const app = express();
 const bp = require('body-parser');
 const path = require("path");
-const supplier = require("./supplier");
-const warehouse = require("./warehouse");
 
+const supplier = require("./supplier")
+const itemtrans = require("./trans")
+const invertory = require("./invertory")
+const transfer = require("./transfer")
+const product = require("./products")
+const warehouse = require("./warehouse")
+const purchase = require("./purchase")
+const cashier = require("./cashier")
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -24,6 +30,13 @@ module.exports = {
     start(_port){
         warehouse.register(app)
         supplier.register(app);
+        itemtrans.register(app);
+        invertory.register(app);
+        warehouse.register(app);
+        transfer.register(app);
+        product.register(app);
+        purchase.register(app);
+        cashier.register(app);
         app.listen(_port||8081);
 
     }

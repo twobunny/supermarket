@@ -8,7 +8,7 @@ client.connect('mongodb://127.0.0.1:27017', (_error, _db) => {
         console.error(_error);
         return false;
     }
-    db = _db.db('test1708');
+    db = _db.db('supermarket');
 })
 
 module.exports = {

@@ -12,6 +12,17 @@ module.exports = {
                     res.send(apiResult(false))
                 }
             })
+        }),
+        app.post('/getsupplier',(req,res)=>{
+           let pros = req.body;
+           db.mongodb.insert('supplier',pros).then((result) => {
+                    
+                if(result.ops && result.ops.length){
+                    res.send(apiResult(true,result))
+                }else{
+                    res.send(apiResult(false))
+                }
+            })
         })
     }
 }

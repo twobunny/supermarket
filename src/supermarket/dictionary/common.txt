@@ -10,17 +10,29 @@
         "name":"Name",
         "contacts":"Contacts",
         "address":"Address"
+        "supplierid":"SupplierId",
+        "person":"Person",
+        "adress":"Adress",
+        "outhouse":"Outhose",
+        "inhouse":"Inhouse"
+
     },
     "cn": {
         "account": "账户",
         "phone": "电话",
         "mail": "邮箱",
-        "projectname": "项目名称" ,
+        "projectname": "项目名称",
         "title":"标题",
         "linenum":"行号",
         "id":"编号",
         "name":"名称",
         "contacts":"负责人",
         "address":"地址"
+        "supplierid":"供应商编号",
+        "person":"联系人",
+        "adress":"地址",
+        "outhouse":"调出仓库",
+        "inhouse":"调入仓库"
+
     }
 }
