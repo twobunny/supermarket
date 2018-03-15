@@ -9,7 +9,7 @@
                 config:{
                     api:"",
                     params:{page:1,limit:10},
-                    cols:['itemtransid','type','direction','qty','amount','wsid','reckid']
+                    cols:['itemtransid','type','direction','qty','amount','whid','reckid']
                 }
             }
         },

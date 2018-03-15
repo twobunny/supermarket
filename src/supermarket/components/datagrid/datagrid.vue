@@ -28,7 +28,10 @@
                 <tr>
                     <th v-if="$store.state.common.lanType=='en'">Linenum</th>
                     <th v-else>序号</th>
-                    <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1">{{key}}</th>
+                    <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1 &&Object.keys(dictionary).length>0">{{dictionary[$store.state.common.lanType][key] || key}}</th>
+    
+                    <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1&&Object.keys(dictionary).length==0" v-else>{{key}}</th>
+
                     <th v-if="$store.state.common.lanType=='en'" v-show="showos">Operation</th>
                     <th v-else v-show="showos">操作</th>
                 </tr>
@@ -184,6 +187,9 @@
             this.show=true;
             http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
+                console.log(this.$store.state.common.lanType)
+                console.log(this.dictionary)
+                console.log(this.dictionary[this.$store.state.common.lanType])
             })
             httpclient.get(this.config.api,{pg:this.config.params}).then((res) => {
                 if(res.data.status){

@@ -3,26 +3,34 @@
         "account": "Account",
         "phone": "Phone",
         "mail": "E-Mail",
-        "projectname": "Project Name",
+        "projectname": "ProjectName",
         "title":"Title",
         "linenum":"Linenum",
-<<<<<<< HEAD
-        "itemId": "itemId",
-        "itemName":"itemName",
-        "price":"price",
-        "status":"status",
-=======
         "id":"ID",
         "name":"Name",
         "contacts":"Contacts",
-        "address":"Address"
->>>>>>> ebd6989ed2074a0d3d77c078a23bd4ed3fe73d0f
+        "address":"Address",
         "supplierid":"SupplierId",
         "person":"Person",
-        "adress":"Adress",
         "outhouse":"Outhose",
-        "inhouse":"Inhouse"
-
+        "inhouse":"Inhouse",
+        "itemId": "ItemId",
+        "itemName":"ItemName",
+        "price":"Price",
+        "status":"Status",
+        "username":"UserName",
+        "whid":"WhId",
+        "whname":"WhName",
+        "itemid":"ItemId",
+        "itemname":"ItemName",
+        "qty":"Qty",
+        "outqty":"OutQty",
+        "itemtransid":"ItemTransId",
+        "type":"Type",
+        "direction":"Direction",
+        "amount":"Amount",
+        "reckid":"ReckId",
+        "password":"Password"
     },
     "cn": {
         "account": "账户",
@@ -31,25 +39,32 @@
         "projectname": "项目名称",
         "title":"标题",
         "linenum":"行号",
-<<<<<<< HEAD
         "itemId": "产品编号",
         "itemName":"产品名称",
         "price":"价格",
         "status":"状态",
-=======
         "id":"编号",
         "name":"名称",
         "contacts":"负责人",
-        "address":"地址"
->>>>>>> ebd6989ed2074a0d3d77c078a23bd4ed3fe73d0f
+        "address":"地址",
         "supplierid":"供应商编号",
         "person":"联系人",
         "adress":"地址",
         "outhouse":"调出仓库",
-        "inhouse":"调入仓库"
-<<<<<<< HEAD
-=======
+        "inhouse":"调入仓库",
+        "username":"用户名",
+        "whid":"仓库编号",
+        "whname":"仓库名称",
+         "itemid":"产品编号",
+        "itemname":"产品名称",
+        "qty":"数量",
+        "outqty":"调货数量",
+        "itemtransid":"事项编号",
+        "type":"类型",
+        "direction":"方向",
+        "amount":"金额",
+        "reckid":"关联ID",
+        "password":"密码"
 
->>>>>>> ebd6989ed2074a0d3d77c078a23bd4ed3fe73d0f
     }
 }
