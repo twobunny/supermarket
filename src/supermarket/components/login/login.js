@@ -4,12 +4,14 @@ import router from '../../router/router.js'
 import filter from "../../api/utils/filter.js"
 const state = {
 	a: 1,
-	b: 2
+	b: 2,
+	baseurl:"http://10.3.136.191:8081"
 }
 
 const mutations = {
 	login: (statedata, formData) => {
-			http.get('login',formData).then(response => {
+			console.log(this)
+			http.get(this.a.state.baseurl+'/login',formData).then(response => {
 				if(response.data.status){
 				window.sessionStorage.setItem("token",response.data.mes)
 					router.push({path:"/"})

@@ -116,7 +116,7 @@
                  httpclient.post(this.config.api+"add",pro).then((res)=>{
                     if(res.data.status){
                         this.showcover = false;
-                        http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
+                        httpclient.get(this.config.api,{pg:this.config.params}).then((res) => {
                             this.dataset = res.data.data;
                         })
                         this.txtobj={}
@@ -131,7 +131,7 @@
             },
             goto:function(_page){
                 this.pageindex = _page;
-                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
+                httpclient.get(this.config.api,{pg:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
                     this.dataset = res.data.data;
                 })
 
@@ -142,7 +142,7 @@
                 if(this.pageindex <= 0 ){
                     this.pageindex = 1
                 }
-                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
+                httpclient.get(this.config.api,{pg:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
                     this.dataset = res.data.data;
                 })
                 return this.pageindex;
@@ -152,7 +152,7 @@
                 if(this.pageindex >= this.pages ){
                     this.pageindex = this.pages
                 }
-                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
+                httpclient.get(this.config.api,{pg:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
                     this.dataset = res.data.data;
                 })
                 return this.pageindex;
@@ -163,9 +163,10 @@
                 let id=this.dataset[index]._id;
                 httpclient.post(this.config.api+"del",{id:id}).then((res) => {
                    if(res.data.status){
-                       $(event.target).closest('tr').remove();
-                        location.reload();
-                   }
+                        httpclient.get(this.config.api,{pg:{page:this.pageindex,limit:this.config.params.limit}}).then((res) => {
+                            this.dataset = res.data.data;
+                        })
+                    }
               });
             },
             update:function(e){
