@@ -4,7 +4,7 @@
         </select>
 </template>
 <script type="text/javascript">
-    import http from "axios"
+    import http from "../../httpclient/httpclient.js"
     export default {
         data:function(){
             return {

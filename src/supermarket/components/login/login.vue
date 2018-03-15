@@ -22,7 +22,6 @@
 <script type="text/javascript">
 	import './Login.css'
 	import { mapGetters, mapActions } from 'vuex'
-
 	export default {
 		data: function(){
 			return {
@@ -31,8 +30,10 @@
 			}
 		},
 		methods: {
-			login: function(event){
-				console.log(this)
+			login: function(){
+				const username = this.username;
+				const password = this.pwd;
+				this.$store.dispatch('login',{username,password})
 				
 			}
 		}

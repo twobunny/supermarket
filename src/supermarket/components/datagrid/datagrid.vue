@@ -71,6 +71,7 @@
     import httpclient from '../../httpclient/httpclient.js'
     import "./datagrid.css"
     import sublime from "./sublime.vue"
+    import router from "../../router/router.js"
     
     export default {
         props:["config",'showo'],
@@ -98,7 +99,7 @@
             linkhide(){
                 this.link = false;
 
-                http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
+                httpclient.get(this.config.api,{pg:this.config.params}).then((res) => {
                     this.dataset = res.data.data;
                 })
             },                                                            
@@ -183,11 +184,17 @@
             http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
             })
-            http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
+            httpclient.get(this.config.api,{pg:this.config.params}).then((res) => {
                 if(res.data.status){
                      this.dataset = res.data.data;
                     this.qty = res.data.mes;
                     this.pages = Math.ceil((this.qty*1) / (this.config.params.limit*1));
+                }else{
+                    console.log(res)
+                    if(res.data.err==="unauthorized"){
+                        alert("用户未登录")
+                        router.push({path:"/login"});
+                    }
                 }
                
                 this.show=false;

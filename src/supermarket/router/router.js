@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeComponent from '../components/home/home.vue'
 import DatagridComponent from "../components/datagrid/datagrid.vue"
 import LoginComponent from "../components/login/login.vue"
+import MemberComponent from "../components/member/member.vue"
 import SupplierComponent from "../components/supplier/supplier.vue"
 import ProductsComponent from "../components/products/products.vue"
 
@@ -12,7 +13,7 @@ import TransferComponent from "../components/transfer/transfer.vue"
 import WarehouseComponent from '../components/warehouse/warehouse.vue'
 import PurchaseComponent from "../components/purchase/purchase.vue"
 import CashierComponent from "../components/cashier/cashier.vue"
-
+import UsersComponent from "../components/users/users.vue"
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -22,6 +23,7 @@ const router = new VueRouter({
     {path:"/",component:HomeComponent,
        
         children:[
+        {path:"member",component:MemberComponent},
         {path:"product",component:ProductsComponent},
         {path:"supplier",name:"supplier",component:SupplierComponent},
         {path:"itemtrans",name:"itemtrans",component:ItemtransComponent},
@@ -30,7 +32,7 @@ const router = new VueRouter({
         {path:'warehouse',component:WarehouseComponent},
         {path:"purchase",component:PurchaseComponent},
         {path:"cashier",component:CashierComponent},
-
+        {path:"users",component:UsersComponent}
         ]}
         
     

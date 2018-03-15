@@ -1,7 +1,7 @@
 <template>
     <dl class="cnav foldpanel">
         <dt @click="showdd">用户管理</dt>
-            <dd><router-link to="11">用户</router-link></dd>
+            <dd><router-link to="/users">用户</router-link></dd>
         <dt @click="showdd">基本信息</dt>
             <dd><router-link to="/product">物料表</router-link></dd>
             <dd><router-link to="/warehouse">仓库表</router-link></dd>
@@ -12,6 +12,7 @@
             <dd><router-link to="/purchase">进货单</router-link></dd>
             <dd><router-link to="/itemtrans">物料事项</router-link></dd>
         <dt @click="showdd">销售</dt>
+            <dd><router-link to="/member">会员</router-link></dd>
             <dd><router-link to="/cashier">收银</router-link></dd>
     </dl>
     

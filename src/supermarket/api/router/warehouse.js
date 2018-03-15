@@ -31,15 +31,15 @@ module.exports = {
                 }
             })
         }),
-        // app.get('/getwarehouse',(req,res) => {
-        //     db.mongodb.select('warehouse').then( (result) => {
-        //         if(result && result.length){
-        //             res.send(apiResult(true,result))
-        //         }else{
-        //             res.send(apiResult(false))
-        //         }
-        //     })
-        // }),
+        app.get('/getwarehouse',(req,res) => {
+            db.mongodb.select('warehouse').then( (result) => {
+                if(result && result.length){
+                    res.send(apiResult(true,result))
+                }else{
+                    res.send(apiResult(false))
+                }
+            })
+        }),
         app.post('/warehouseadd',(req,res)=>{
            let pros = req.body;
            db.mongodb.insert('warehouse',pros).then((result) => {

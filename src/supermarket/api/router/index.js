@@ -12,6 +12,9 @@ const product = require("./products")
 const warehouse = require("./warehouse")
 const purchase = require("./purchase")
 const cashier = require("./cashier")
+const member = require("./member")
+const login = require("./login")
+const filter = require("../utils/filter.js")
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -24,6 +27,7 @@ app.all('*', function(req, res, next) {
       next();
     }
 });
+app.use(filter);
 
 app.use(bp.urlencoded({extended: false}));
 
@@ -39,6 +43,8 @@ module.exports = {
         product.register(app);
         purchase.register(app);
         cashier.register(app);
+        login.register(app);
+        member.register(app);
         app.listen(_port||8081);
 
     }

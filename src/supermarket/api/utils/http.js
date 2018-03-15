@@ -1,50 +1,36 @@
-/* 
-* @Author: Marte
-* @Date:   2018-03-13 11:08:29
-* @Last Modified by:   Marte
-* @Last Modified time: 2018-03-15 18:02:07
-*/
+import axios from 'axios'
 
-import axios from 'axios';
-import router from '../router/router.js'
-
-// const base_wsurl = 'ws://aiminer.cc:88';
-// const base_url = 'http://aiminer.cc:88';
-
-const base_wsurl = 'ws://floats.top:88';
-const base_url = 'http://floats.top:88';
-
-// const base_wsurl = 'ws://10.3.50.43:88';
-// const base_url = 'http://localhost:88';
-
+const baseUrl = 'http://localhost:8081'
+import router from "../../router/router.js"
 export default {
-    base_wsurl,
-    base_url,
-    socket(_wsurl){
-        var url = _wsurl && _wsurl.startsWith('ws') ? _wsurl : `${base_wsurl}/${_wsurl}`;
-        var ws = new WebSocket(url);
-        return ws;
-    },
+    // socket(_wsurl){
+    //  var url = _wsurl && _wsurl.startsWith('ws') ? _wsurl : `${base_wsurl}/${_wsurl}`;
+    //  var ws = new WebSocket(url);
+    //  return ws;
+    // },
     get(_url, _params){
-        var url = _url && _url.startsWith('http') ? _url : `${base_url}/${_url}`;
+        var url = _url && _url.startsWith('http') ? _url : `${baseUrl}/${_url}`;
         return new Promise((resolve, reject) => {
             axios({
                 url: url,
                 params: _params || {},
-                headers: {Authorization: window.sessionStorage.getItem('token')}
+                headers: {authorization: window.sessionStorage.getItem('token')}
             }).then(res => {
-                if(!res.data.status && res.data.error == "unauthorized"){
+                if(!res.data.status && res.data.err == "unauthorized"){
+                    
                     router.push('login');
                     return false;
                 }
                 resolve(res)
             }).catch(error => {
                 reject(error)
+                router.push('login');
+
             })
         })
     },
     post(_url, _params){
-        var url = _url && _url.startsWith('http') ? _url : `${base_url}/${_url}`;
+        var url = _url && _url.startsWith('http') ? _url : `${baseUrl}/${_url}`;
         return new Promise((resolve, reject) => {
             axios({
                 url: url,

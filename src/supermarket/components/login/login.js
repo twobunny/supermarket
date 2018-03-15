@@ -1,23 +1,24 @@
 import Vue from 'vue'
-import http from '../../utils/HttpClient'
-import router from '../../router/index'
-
+import http from '../../api/utils/http.js'
+import router from '../../router/router.js'
+import filter from "../../api/utils/filter.js"
 const state = {
 	a: 1,
 	b: 2
 }
 
 const mutations = {
-	login: (data, formData) => {
-		// if(formData.username == 'dk' && formData.password == 'dk'){
-		// 	router.push({name: 'home'})
-		// } else {
-			formData.grant_type = 'password'
-			http.post('login/index', formData)
-			.then(response => {
-				router.push({name: 'home'})
+	login: (statedata, formData) => {
+			http.get('login',formData).then(response => {
+				if(response.data.status){
+				window.sessionStorage.setItem("token",response.data.mes)
+					router.push({path:"/"})
+				}else{
+					alert("登陆信息错误");
+				}
+
+				
 			})
-		// }
 	}
 }
 

@@ -21,6 +21,19 @@ module.exports = {
                 }
             })
         }),
+        app.get("/getinvertory",(req,res) => {
+            let itemid = req.query.itemid;
+            let whid = req.query.whid;
+            let obj = itemid?{itemid}:{};
+            whid? obj['whid']=whid:obj;
+            db.mongodb.select("invertory",obj).then( (result) => {
+                if(result && result.length){
+                    res.send(apiResult(true,result))
+                }else{
+                    res.send(apiResult(false))
+                }
+            })
+        }),
         app.post("/changeinvertory",(req,res) => {
             let from = req.body.from;
             let to = req.body.to;

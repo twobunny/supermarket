@@ -16,6 +16,7 @@
     </table>
 </template>
 <script type="text/javascript">
+    import router from "../../router/router.js"
     export default {
         props:['data'],
         data:function(){
@@ -30,6 +31,13 @@
                 },
             deep:true 
             }
+        },
+        mounted(){
+          if(!window.sessionStorage.getItem("token")){
+            alert("用户未登录");
+            router.push({path:"/login"});
+
+          }  
         }
     }
 </script> 

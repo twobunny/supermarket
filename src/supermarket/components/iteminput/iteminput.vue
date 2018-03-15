@@ -3,7 +3,7 @@
 </template>
 
 <script type="text/javascript">
-    import http from "axios"
+    import http from "../../httpclient/httpclient.js"
     export default {
         data:function(){
             return {
@@ -12,7 +12,7 @@
         },
         methods:{
             getProduct(event){
-                http.get(this.$store.state.common.baseurl+"/invertory",{params:{itemid:this.itemid,whid:this.$store.state.common.whid}}).then((res) => {
+                http.get(this.$store.state.common.baseurl+"/getinvertory",{params:{itemid:this.itemid,whid:this.$store.state.common.whid}}).then((res) => {
                     if(res.status){
                         this.$emit("inputcall",res.data.data[0]);
                     }else{
