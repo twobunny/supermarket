@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bp = require('body-parser');
 const path = require("path");
+const products = require('./products');
 
 const supplier = require("./supplier")
 const itemtrans = require("./trans")
@@ -28,6 +29,7 @@ app.use(bp.urlencoded({extended: false}));
 
 module.exports = {
     start(_port){
+        products.register(app);
         warehouse.register(app)
         supplier.register(app);
         itemtrans.register(app);

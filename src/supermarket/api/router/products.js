@@ -5,8 +5,6 @@ module.exports = {
         app.get('/products', (req, res) => {
             let itemid = req.query.itemid;
             let params = JSON.parse(req.query.pg);
-
-            console.log(itemid)
             db.mongodb.select('item').then((result) => {
                 let datacounts  = result.length;
                 let page = params.page*1;
@@ -21,20 +19,32 @@ module.exports = {
             })
         })
 
-        app.post('/addproduct',(req,res) => {
-            let itemNum = req.body.itemNum;
-            let itemName = req.body.itemName;
-            let price = req.body.price;
-            let stutas = req.body.stutas;
-            db.mongodb.insert('item',{itemNum, itemName, price, stutas}).then((result) => {
-                res.send({status: true, data: result});
+        app.post('/productsupdate', (req, res) => {
+            let newvalue =req.body;
+            let objid = db.mongodb.objectid(newvalue._id);        
+            let{itemid,itemName,status,price}=newvalue;
+            db.mongodb.update("item",{_id:objid},{itemid,itemName,status,price}).then( (result) => {
+                if(result){
+                    res.send(apiResult(true));
+                }else{
+                    res.send(apiResult(false))
+                }
             })
-
+        }),
+        app.post('/productsadd',(req,res) => {
+            let newvalue = req.body;
+            db.mongodb.insert("item",newvalue).then( (result) =>{
+                if(result && result.ops.length){
+                    res.send(apiResult(true));
+                }else{
+                    res.send(apiResult(false));
+                }
+            })
         })
 
-        app.post('/delproduct', (req, res) => {
+        app.post('/productsdel', (req, res) => {
             let id  = req.body.id;
-            let oid = db.objectid(id);
+            let oid = db.mongodb.objectid(id);
             db.mongodb.delete('item',{"_id":oid}).then((result) =>{
                 res.send({status: true, data: result});
             })

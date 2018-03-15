@@ -1,4 +1,4 @@
-import "./common/common.css"
+ import "./common/common.css"
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 
 import Vue from 'vue'

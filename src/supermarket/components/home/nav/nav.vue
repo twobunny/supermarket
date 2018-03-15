@@ -3,7 +3,7 @@
         <dt @click="showdd">用户管理</dt>
             <dd><router-link to="11">用户</router-link></dd>
         <dt @click="showdd">基本信息</dt>
-            <dd><router-link to="11">物料表</router-link></dd>
+            <dd><router-link to="/product">物料表</router-link></dd>
             <dd><router-link to="/warehouse">仓库表</router-link></dd>
             <dd><router-link to="/supplier">供应商</router-link></dd>
         <dt @click="showdd">库存管理</dt>

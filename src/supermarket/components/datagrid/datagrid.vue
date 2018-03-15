@@ -11,8 +11,8 @@
                         <label class="lab">
                             *{{val}}:
                         </label>
-                        <input type="text" class="txt" v-model="txt[val]" v-if="idx == 0 " autofocus/>
-                        <input type="text" class="txt" v-model="txt[val]" v-else/>
+                        <input type="text" class="txt" v-model="txtobj[val]" v-if="idx == 0 " autofocus />
+                        <input type="text" class="txt" v-model="txtobj[val]" v-else />
                     </div> 
                     <div class="btn">
                     <button class="btn_create" @click.stop= "createData" v-if="$store.state.common.lanType=='en'">Submit</button>
@@ -32,11 +32,11 @@
                     <th v-if="$store.state.common.lanType=='en'" v-show="showos">Operation</th>
                     <th v-else v-show="showos">操作</th>
                 </tr>
-            </thead> 
+            </thead>
             <tbody>
                 <tr v-for="(obj,idx) in dataset">
                     <td>{{idx+1}}</td>
-                    <td v-for="(val,key) in obj" v-if="config.cols.indexOf(key)>-1">{{val}}</td>
+                    <td v-for="(val,key) in obj" v-if="config.cols.indexOf(key)>-1" :data-id="key">{{val}}</td>
                     <td>
                         <button v-if="$store.state.common.lanType=='en'" class="btn btn-default" v-show="showos">update</button>
                         <button v-else class="btn btn-default" v-show="showos">编辑</button>
@@ -60,16 +60,17 @@
         </ul>
         </div>
         <spinner v-show="show"></spinner> 
+        <sublime v-show="link" :obj="txtobj" :cols="config.cols" :config="config" @linkhide="linkhide"></sublime>
     </div>
     
 </template>
 <script type="text/javascript">
-    // import httppage from"./datagrid.js"
     import http from "axios"
+    import $ from "jquery"
     import spinner from "../spinner/spinner.vue"
     import httpclient from '../../httpclient/httpclient.js'
     import "./datagrid.css"
-    import $ from "jquery"
+    import sublime from "./sublime.vue"
     
     export default {
         props:["config",'showo'],
@@ -77,39 +78,43 @@
             return{
                 dataset:[],
                 dictionary:{},
-                txt:{},
+                txtobj:{},
                 show:false,
                 showcover:false,
                 qty:'',
                 pages:'',
                 showos:true,
-                pageindex:1
+                pageindex:1,
+                link:false
             }
         },
         components:{
-            spinner,
+            spinner,sublime
         },
         methods:{
             addshow(){
                 this.showcover = true;
-            },                                                              
+            }, 
+            linkhide(){
+                this.link = false;
+            },                                                            
             createData(){
-                let pro = this.txt;
+                let pro = this.txtobj;
+                console.log(this.txtobj)
                 let prolength = Object.keys(pro).length;
-                let datalength = Object.keys(this.dataset).length;
+                let datalength = this.config.cols.length;
                 console.log(prolength,datalength)
                 if(prolength!= datalength){
                     alert("输入框不能为空");
                     return 
                 }
-
-                 httpclient.post(this.config.api,pro).then((res)=>{
+                 httpclient.post(this.config.api+"add",pro).then((res)=>{
                     if(res.data.status){
                         this.showcover = false;
                         http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
                             this.dataset = res.data.data;
                         })
-                        this.txt={}
+                        this.txtobj={}
                     }else{
                         alert('error')
                     }
@@ -147,9 +152,25 @@
                 })
                 return this.pageindex;
 
+            },
+            del:function(event){    
+                var index = $(event.target).closest("tr").index();
+                let id=this.dataset[index]._id;
+                console.log(id);
+                httpclient.post(this.config.api+"del",{id:id}).then((res) => {
+                   if(res.data.status){
+                   console.log(event.target)
+                       $(event.target).closest('tr').remove();
+                   }
+              });
+            },
+            update:function(e){
+                this.link = true;
+                var index = $(event.target).closest("tr").index();
+                let obj=this.dataset[index];
+                this.$children[1].setnew(obj);
             }
         },
-       
         mounted(){
             if(this.showo === false){
                 this.showos = this.showo;
@@ -159,16 +180,15 @@
                 this.dictionary =res.data;
             })
             http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
-                this.dataset = res.data.data;
-                this.qty = res.data.mes;
-                this.pages = Math.ceil((this.qty*1) / (this.config.params.limit*1));
+                if(res.data.status){
+                     this.dataset = res.data.data;
+                    this.qty = res.data.mes;
+                    this.pages = Math.ceil((this.qty*1) / (this.config.params.limit*1));
+                }
+               
                 this.show=false;
             })
-
-            
-        
-
-        }
+        },
     }
 
     
