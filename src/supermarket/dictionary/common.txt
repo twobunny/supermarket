@@ -6,10 +6,17 @@
         "projectname": "Project Name",
         "title":"Title",
         "linenum":"Linenum",
+<<<<<<< HEAD
         "itemId": "itemId",
         "itemName":"itemName",
         "price":"price",
         "status":"status",
+=======
+        "id":"ID",
+        "name":"Name",
+        "contacts":"Contacts",
+        "address":"Address"
+>>>>>>> ebd6989ed2074a0d3d77c078a23bd4ed3fe73d0f
         "supplierid":"SupplierId",
         "person":"Person",
         "adress":"Adress",
@@ -24,14 +31,25 @@
         "projectname": "项目名称",
         "title":"标题",
         "linenum":"行号",
+<<<<<<< HEAD
         "itemId": "产品编号",
         "itemName":"产品名称",
         "price":"价格",
         "status":"状态",
+=======
+        "id":"编号",
+        "name":"名称",
+        "contacts":"负责人",
+        "address":"地址"
+>>>>>>> ebd6989ed2074a0d3d77c078a23bd4ed3fe73d0f
         "supplierid":"供应商编号",
         "person":"联系人",
         "adress":"地址",
         "outhouse":"调出仓库",
         "inhouse":"调入仓库"
+<<<<<<< HEAD
+=======
+
+>>>>>>> ebd6989ed2074a0d3d77c078a23bd4ed3fe73d0f
     }
 }

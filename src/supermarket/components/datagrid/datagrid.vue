@@ -1,32 +1,34 @@
-
 <template>
     <div>
-        <div class="add" @click.stop= "addshow"> 
-            <input type ="button" value="添加" class="btn" />
+        <div class="add" > 
+            <input type ="button" value="添加" class="btn" @click.stop= "addshow"/>
             <div v-show="showcover">
                 <div class = "cover">
                 </div>
                 <form class="adddata">
                     <h1></h1>
-                    <div v-for="(val) in this.config.cols">
-                        <label class="lab">{{val}}</label>
-                        <input type="text" class="txt" v-model="txt[val]"/>
+                    <div v-for="(val,idx) in this.config.cols">
+                        <label class="lab">
+                            {{val}}:
+                        </label>
+                        <input type="text" class="txt" v-model="txtobj[val]" v-if="idx == 0 " autofocus />
+                        <input type="text" class="txt" v-model="txtobj[val]" v-else />
+                    </div> 
+                    <div class="btn">
+                    <button class="btn_create" @click.stop= "createData" v-if="$store.state.common.lanType=='en'">Submit</button>
+                    <button class="btn_create" @click.stop= "createData" v-else>提交</button>
+                    <button class="btn_cancel" @click.stop="cancel" v-if="$store.state.common.lanType=='en'">Cancel</button>
+                    <button class="btn_cancel" @click.stop="cancel" v-else>取消</button>
                     </div>
-                    <button class="btn_create" @click.stop= "createData">提交</button>
-                    <button class="btn_cancel" @click.stop="cancel">取消</button>
                 </form>
             </div>
         </div>
-       
         <table class="table  table-hover">
             <thead>
-                <tr >
+                <tr>
                     <th v-if="$store.state.common.lanType=='en'">Linenum</th>
                     <th v-else>序号</th>
-                    <th v-if="config.cols.indexOf(key)>-1 && dictionary.length>0"  v-for="(val,key) in dataset[0]" >{{ dictionary[$store.state.common.lanType][key] || key}}</th>
-                     <th v-if="config.cols.indexOf(key)>-1 &&  !dictionary.length>0"  v-for="(val,key) in dataset[0]" >{{key}}</th>
-                    <!-- <th v-for="(val,key) in dataset[2]" v-if="config.cols.indexOf(key)>-1">{{ dictionary[$store.state.common.lanType][key] || key}}</th>
-                    <th v-if="config.cols.indexOf(key)>-1" v-for="(val,key) in dataset[0]" >{{ dictionary[$store.state.common.lanType][key] || key}}</th> -->
+                    <th v-for="(val,key) in dataset[0]" v-if="config.cols.indexOf(key)>-1">{{key}}</th>
                     <th v-if="$store.state.common.lanType=='en'">Operation</th>
                     <th v-else>操作</th>
                 </tr>
@@ -36,15 +38,29 @@
                     <td>{{idx+1}}</td>
                     <td v-for="(val,key) in obj" v-if="config.cols.indexOf(key)>-1" :data-id="key">{{val}}</td>
                     <td>
-                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-default">update</button>
-                        <button v-else class="btn btn-default">编辑</button>
+                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-default" @click.stop="update">update</button>
+                        <button v-else class="btn btn-default" @click.stop="update">编辑</button>
                         <button v-if="$store.state.common.lanType=='en'" class="btn btn-danger" @click="del">del</button>
                         <button v-else class="btn btn-danger" @click="del">删除</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <div class = "page">
+        <ul>
+            <li>
+                <button @click = "pre" v-model = "pageindex">上一页</button>
+            </li>
+            <li v-for="page in this.pages">
+                <input type="button"  :value="page" @click="goto(page)"/>
+            </li>
+            <li>
+                <button @click = "next" v-model = "pageindex">下一页</button>
+            </li>
+        </ul>
+        </div>
         <spinner v-show="show"></spinner> 
+        <sublime v-show="link" :obj="txtobj" :cols="config.cols" :config="config" @linkhide="linkhide"></sublime>
     </div>
     
 </template>
@@ -54,75 +70,115 @@
     import spinner from "../spinner/spinner.vue"
     import httpclient from '../../httpclient/httpclient.js'
     import "./datagrid.css"
+    import sublime from "./sublime.vue"
+    
     export default {
         props:["config"],
         data:function(){
             return{
                 dataset:[],
                 dictionary:{},
-                txt:{},
+                txtobj:{},
                 show:false,
                 showcover:false,
-                createdata:[],
-                pushdata:{}
+                qty:'',
+                pages:'',
+                pageindex:1,
+                link:false
             }
         },
         components:{
-            spinner,
+            spinner,sublime
         },
         methods:{
             addshow(){
                 this.showcover = true;
-            },
+            }, 
+            linkhide(){
+                this.link = false;
+            },                                                            
             createData(){
-                let pro = this.txt;
-                httpclient.post(this.config.api,pro).then((res)=>{
+                let pro = this.txtobj;
+                console.log(pro)
+
+                 httpclient.post(this.config.api+"add",pro).then((res)=>{
                     if(res.data.status){
                         this.showcover = false;
-                        http.get(this.config.api,{params:this.config.params || {} }).then((res) => {
+                        http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
                             this.dataset = res.data.data;
                         })
-                        this.txt={}
+                        this.txtobj={}
                     }else{
                         alert('error')
                     }
                 })
+
             },
             cancel(){
                 this.showcover = false;
-       
             },
-        },
+            goto:function(_page){
+                this.pageindex = _page;
+                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
+                    this.dataset = res.data.data;
+                })
 
+                return this.pageindex;
+            },
+            pre(){
+                this.pageindex --;
+                if(this.pageindex <= 0 ){
+                    this.pageindex = 1
+                }
+                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
+                    this.dataset = res.data.data;
+                })
+                return this.pageindex;
+            },
+            next(){
+                this.pageindex ++;
+                if(this.pageindex >= this.pages ){
+                    this.pageindex = this.pages
+                }
+                http.get(this.config.api,{params:{pg:{page:this.pageindex,limit:this.config.params.limit}|| {}}}).then((res) => {
+                    this.dataset = res.data.data;
+                })
+                return this.pageindex;
+
+            },
+            del:function(event){    
+                // this.config.api = this.$store.state.common.baseurl + "/products";
+                var index = $(event.target).closest("tr").index();
+                let id=this.dataset[index]._id;
+                console.log(id);
+                httpclient.post(this.config.api,{id:id}).then((res) => {
+                   if(res.data.status){
+                   console.log(event.target)
+                       $(event.target).closest('tr').remove();
+                   }
+              });
+            },
+            update:function(e){
+                this.link = true;
+                var index = $(event.target).closest("tr").index();
+                let obj=this.dataset[index];
+                this.$children[1].setnew(obj);
+            }
+        },
         mounted(){
             this.show=true;
             http.get("http://localhost:8080/src/supermarket/dictionary/common.txt").then( (res) => {
                 this.dictionary =res.data;
             })
             console.log(this.config.api)
-            http.get(this.config.api).then((res) => {
+            http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
                 this.dataset = res.data.data;
+                this.qty = res.data.mes;
+                this.pages = Math.ceil((this.qty*1) / (this.config.params.limit*1));
                 this.show=false;
             })
         },
-
-        methods: {
-            del:function(event){    
-                this.config.api = this.$store.state.common.baseurl + "/delproduct";
-                var index = $(event.target).closest("tr").index();
-                let id=this.dataset[index]._id;
-                httpclient.post(this.config.api,{id:id}).then((res) => {
-                   if(res.data.status){
-                   console.log(event.target)
-                       $(event.target).closest('tr').remove();
-                   }
-        
-              });
-                
-        
-            }
-        }
-       
-
     }
+
+    
 </script>

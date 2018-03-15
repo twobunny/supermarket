@@ -5,6 +5,8 @@ aa/
 project/
 npm-debug.log
 yarn-error.log
+src/supermarket/common/common.js
+
 
 # Editor directories and files
 .idea
