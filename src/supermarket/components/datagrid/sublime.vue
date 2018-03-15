@@ -33,18 +33,19 @@
         methods:{
             setnew(mes){
                 this.edit = mes;
-
             },
             updated(){
                 this.cols.forEach((item) => {
                     this.edit[item] = $(`input[data-val=${item}]`).val();
                 })
+                console.log(this.edit);
                 httpclient.post(this.config.api+"update",this.edit).then((res) => {
                     this.$emit("linkhide");
                 })
             },
             cancel(){
                 this.$emit("linkhide");
+
             }
         },
        

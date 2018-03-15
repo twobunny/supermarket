@@ -9,7 +9,6 @@ module.exports = {
                 let datacounts  = result.length;
                 let page = params.page*1;
                 let limit = params.limit*1;
-                console.log(page,limit)
                 let realdata = result.slice((page-1)*limit,limit*page);
                 if(result && result.length){
                     res.send(apiResult(true,realdata,datacounts))
@@ -22,8 +21,8 @@ module.exports = {
         app.post('/productsupdate', (req, res) => {
             let newvalue =req.body;
             let objid = db.mongodb.objectid(newvalue._id);        
-            let{itemid,itemName,status,price}=newvalue;
-            db.mongodb.update("item",{_id:objid},{itemid,itemName,status,price}).then( (result) => {
+            delete newvalue._id;
+            db.mongodb.update("item",{_id:objid},newvalue).then( (result) => {
                 if(result){
                     res.send(apiResult(true));
                 }else{

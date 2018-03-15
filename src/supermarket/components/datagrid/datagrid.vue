@@ -38,10 +38,10 @@
                     <td>{{idx+1}}</td>
                     <td v-for="(val,key) in obj" v-if="config.cols.indexOf(key)>-1" :data-id="key">{{val}}</td>
                     <td>
-                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-default" v-show="showos">update</button>
-                        <button v-else class="btn btn-default" v-show="showos">编辑</button>
-                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-danger" v-show="showos">del</button>
-                        <button v-else class="btn btn-danger" v-show="showos">删除</button>
+                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-default" v-show="showos" @click="update">update</button>
+                        <button v-else class="btn btn-default" v-show="showos" @click="update">编辑</button>
+                        <button v-if="$store.state.common.lanType=='en'" class="btn btn-danger" v-show="showos" @click='del'>del</button>
+                        <button v-else class="btn btn-danger" v-show="showos" @click='del'>删除</button>
                     </td>
                 </tr>
             </tbody>
@@ -97,6 +97,10 @@
             }, 
             linkhide(){
                 this.link = false;
+
+                http.get(this.config.api,{params: {pg:this.config.params || {}}}).then((res) => {
+                    this.dataset = res.data.data;
+                })
             },                                                            
             createData(){
                 let pro = this.txtobj;
@@ -156,11 +160,10 @@
             del:function(event){    
                 var index = $(event.target).closest("tr").index();
                 let id=this.dataset[index]._id;
-                console.log(id);
                 httpclient.post(this.config.api+"del",{id:id}).then((res) => {
                    if(res.data.status){
-                   console.log(event.target)
                        $(event.target).closest('tr').remove();
+                        location.reload();
                    }
               });
             },
@@ -168,6 +171,7 @@
                 this.link = true;
                 var index = $(event.target).closest("tr").index();
                 let obj=this.dataset[index];
+                console.log(this.dataset)
                 this.$children[1].setnew(obj);
             }
         },

@@ -17,7 +17,7 @@
             datagrid:DatagridComponent
         },
         beforeMount(){
-            this.config.api = this.$store.state.common.baseurl+"/getsupplier";
+            this.config.api = this.$store.state.common.baseurl+"/supplier";
         }
     }
 </script>

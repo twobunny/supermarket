@@ -13,7 +13,6 @@
                 config:{
                     api:"",
                     params:{page:1,limit:10},
-                    // cols:['supplierid','person','phone','adress']
                     cols:['itemId','itemName','price','status']
                 }
             }
