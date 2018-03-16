@@ -10,7 +10,7 @@
             <dd><router-link to="/invertory">库存表</router-link></dd>
             <dd><router-link to="/transfer">调货单</router-link></dd>
             <dd><router-link to="/purchase">进货单</router-link></dd>
-            <dd><router-link to="/itemtrans">物料事项</router-link></dd>
+            <dd><router-link to="/itemtrans">事项流水</router-link></dd>
         <dt @click="showdd">销售</dt>
             <dd><router-link to="/member">会员</router-link></dd>
             <dd><router-link to="/cashier">收银</router-link></dd>

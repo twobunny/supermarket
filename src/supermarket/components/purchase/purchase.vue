@@ -1,7 +1,7 @@
 <template>
     <div class="purchase">
         <label>扫码入库</label>
-        <iteminput @inputcall="tableadd"></iteminput>
+        <iteminput @inputcall="tableadd" api="/getproduct"></iteminput>
         <button class="btn btn-info" style="margin-bottom:10px;" @click="purchase">确定</button>
         <cashpur :data="dataset"></cashpur>
         <spinner v-show="show"></spinner>
@@ -30,6 +30,7 @@
         methods:{
             tableadd(mes){
                 var exit=false;
+                console.log(mes)
                 this.dataset.forEach( item => {
                     if(item.itemid == mes.itemid){
                         var price = item.price/item.outqty;
@@ -55,15 +56,16 @@
                 httpclient.post(this.$store.state.common.baseurl+"/purchase",param).then((res) => {
                     if(res.data.status){
                         this.show = false;
+                        this.dataset=[];
                         alert("入库成功");
                     }else{
-                        if(res.data.mes){
-                            alert(res.data.mes)
+                            alert("该商品不存在")
                             this.show = false;
                         }
                     }
-                })
+                )
             }
         }
     }
+
 </script>

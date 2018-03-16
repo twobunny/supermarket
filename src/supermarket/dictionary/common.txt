@@ -30,7 +30,11 @@
         "direction":"Direction",
         "amount":"Amount",
         "reckid":"ReckId",
-        "password":"Password"
+        "password":"Password",
+        "membername":"MemberName",
+        "birthday":"Birthday",
+        "discount":"Discount",
+        "integrals":"Integrals"
     },
     "cn": {
         "account": "账户",
@@ -64,7 +68,11 @@
         "direction":"方向",
         "amount":"金额",
         "reckid":"关联ID",
-        "password":"密码"
+        "password":"密码",
+        "membername":"会员名字",
+        "birthday":"生日",
+        "discount":"折扣",
+        "integrals":"积分"
 
     }
 }

@@ -57,5 +57,16 @@ module.exports = {
                 res.send({status: true, data: result});
             })
         })
+
+        app.post('/warehousesearch', (req, res) => {
+
+            let params = req.body.pro;
+            console.log(params)
+
+            db.mongodb.select('warehouse',{params}).then((result)=>{
+                console.log(result)
+            })
+
+        })
     }
 }

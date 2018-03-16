@@ -6,14 +6,13 @@
 
 <script type="text/javascript">
     import datagrid from '../datagrid/datagrid.vue'
-
     export default {
     data:function(){
             return{
                 config:{
                     api:"",
                     params:{page:1,limit:10},
-                    cols:['itemId','itemName','price','status']
+                    cols:['itemid','itemname','price','status']
                 }
             }
         },

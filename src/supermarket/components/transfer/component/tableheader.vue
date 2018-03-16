@@ -3,7 +3,7 @@
         <label>调入仓库</label>
         <dropdownlist :params="params" :api="api"></dropdownlist>
         <label>产品编号</label>
-        <iteminput @inputcall="tableadd"></iteminput>
+        <iteminput @inputcall="tableadd" api="/getinvertory"></iteminput>
         <button class="btn btn-primary" @click="transfer">submit</button>
         <br />
 

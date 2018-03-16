@@ -3,6 +3,8 @@ node_modules/
 dist/
 aa/
 project/
+supermarket1/
+assets/
 npm-debug.log
 yarn-error.log
 src/supermarket/common/common.js

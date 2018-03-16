@@ -16,7 +16,19 @@ module.exports = {
                     res.send(apiResult(false))
                 }
             })
-        })
+        }),
+        app.get('/getproduct', (req, res) => {
+            let params = req.query.params;
+            let itemid = JSON.parse(params).itemid;
+            db.mongodb.select('item',{itemid}).then((result) => {
+                    console.log(result)
+                if(result && result.length>0){
+                    res.send(apiResult(true,result))
+                }else{
+                    res.send(apiResult(false))
+                }
+            })
+        }),
 
         app.post('/productsupdate', (req, res) => {
             let newvalue =req.body;

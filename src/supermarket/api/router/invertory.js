@@ -1,6 +1,6 @@
 const db = require("../db");
 const apiResult = require("../utils/apiResult");
-
+const addtrans = require("./addtrans")
 module.exports = {
     register(app){
         app.get("/invertory",(req,res) => {
@@ -22,10 +22,12 @@ module.exports = {
             })
         }),
         app.get("/getinvertory",(req,res) => {
-            let itemid = req.query.itemid;
-            let whid = req.query.whid;
+            let params = JSON.parse(req.query.params);
+            let itemid = params.itemid;
+            let whid = params.whid;
             let obj = itemid?{itemid}:{};
             whid? obj['whid']=whid:obj;
+            console.log(obj)
             db.mongodb.select("invertory",obj).then( (result) => {
                 if(result && result.length){
                     res.send(apiResult(true,result))
@@ -39,6 +41,10 @@ module.exports = {
             let to = req.body.to;
             let data = JSON.parse(req.body.data);
             data.forEach(function(item){
+                //记录流水
+                addtrans("调货",item.itemid,"入库",item.outqty,item.price,to,"transfer");
+                addtrans("调货",item.itemid,"出库",item.outqty,item.price,from,"transfer");
+
                 //新增记录到调货记录
                 db.mongodb.insert('transfer',{outhouse:from,inhouse:to,itemid:item.itemid,itemname:item.itemname,outqty:item.outqty}).then((result) => {
                     if(result && result.ops.length){}else{

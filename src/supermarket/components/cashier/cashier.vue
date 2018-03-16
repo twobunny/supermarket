@@ -1,7 +1,7 @@
 <template>
      <div class="purchase">
         <label>扫码收银</label>
-        <iteminput @inputcall="tableadd"></iteminput>
+        <iteminput @inputcall="tableadd" api="/getinvertory"></iteminput>
         <button class="btn btn-info" style="margin-bottom:10px;" @click="cashier">确定</button>
         <cashpur :data="dataset"></cashpur>
         <spinner v-show="show"></spinner>
@@ -54,6 +54,7 @@
                     if(res.data.status){
                         this.show = false;
                         alert("收银成功");
+                        this.dataset=[];
                     }else{
                         if(res.data.mes){
                             alert(res.data.mes)
